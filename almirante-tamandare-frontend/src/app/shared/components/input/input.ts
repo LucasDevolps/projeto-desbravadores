@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -15,4 +15,13 @@ export class InputComponent {
   @Input() iconSrc?: string;
   @Input() iconAlt: string = '';
 
+  value: string = '';
+
+  @HostBinding('class.has-value') get hasValue() {
+    return this.value.length > 0;
+  }
+
+  onInput(e: Event) {
+    this.value = (e.target as HTMLInputElement).value || '';
+  }
 }

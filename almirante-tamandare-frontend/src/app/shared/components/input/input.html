@@ -1,6 +1,5 @@
 <div class="relative input-wrapper">
-
-@if (iconSrc){
+  @if (iconSrc){
       <span class="input-icon">
         <img src="{{iconSrc}}" alt="{{iconAlt}}">
       </span>
@@ -8,7 +7,9 @@
 
   <input class="input-cal input-base input-field"
     [placeholder]="placeholder"
-    [type]="type">
+    [type]="type"
+    (input)="onInput($event)"
+    >
 
   <label class="label-cal label-base label-input">
       
