@@ -1,7 +1,19 @@
-<!-- From Uiverse.io by Amine-maker --> 
-<div class="relative">
+<div class="relative input-wrapper">
+
+@if (iconSrc){
+      <span class="input-icon">
+        <img src="{{iconSrc}}" alt="{{iconAlt}}">
+      </span>
+    }
+
   <input class="input-cal input-base input-field"
     [placeholder]="placeholder"
     [type]="type">
-  <label class="label-cal label-base label-input">{{label}}</label>
+
+  <label class="label-cal label-base label-input">
+      
+    {{label}}
+  
+  </label>
+
 </div>

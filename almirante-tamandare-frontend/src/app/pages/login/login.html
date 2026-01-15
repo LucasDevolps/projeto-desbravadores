@@ -1,38 +1,40 @@
 <div class="login-container">
-    <div class="container">
-        
-        <div class="content-title">
-            <div class="logo">
-                <img src="assets/logo.png" alt="">
+    <div class="main-content">
+        <div class="container-border">
+        <div class="container">
+            <div class="content-title">
+                <div class="logo">
+                    <img src="/images/logo.png" alt="">
+                </div>
+                <div class="title">
+                    <span class="first-text">Realizar  </span>
+                    <span class="second-text">Login</span>
+                </div>
             </div>
-            <div class="title">
-                <span>Realizar</span>
-                <span>Login</span>
+            <div class="input">
+                <app-input 
+                iconSrc="/icons/letter.svg"
+                label="Email">
+                </app-input>
+                <app-input 
+                iconSrc="/icons/padlock.svg"
+                type="text" 
+                label="Senha">
+                </app-input>
             </div>
-        </div>
-        
-        <div class="input">
-        <app-input 
-            label="Email">
-        </app-input>
-        <app-input 
-            type="text"
-            label="Senha">
-        </app-input>
-        </div>
-    
-        <div class="button-login">
-            <app-button 
+            <div class="button-login">
+                <app-button 
                 label="Entrar">
-            </app-button>
-            <div><a href="">Esqueci a senha</a></div>
-            <div>Não tem conta? <a href="">Cadastrar-se</a></div>
+                </app-button>
+                <div class="first-div"><a href="">Esqueci a senha</a></div>
+                <div class="second-div">Não tem conta? <a href="">Cadastrar-se</a></div>
+            </div>
         </div>
-    
+    </div>
     </div>
     <div class="footer">
-        <div class="image-footer">
-            <img src="" alt="">
+        <div class="img-footer">
+            <img src="/images/logo-desbravadores.png" alt="">
         </div>
         <span>Clube de Desbravadores - Almirante Tamandaré</span>
     </div>

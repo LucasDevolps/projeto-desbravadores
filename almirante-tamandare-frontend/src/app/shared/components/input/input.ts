@@ -12,4 +12,7 @@ export class InputComponent {
   @Input() type: string = 'text';
   @Input() placeholder: string = '';
   @Input() label: string = '';
+  @Input() iconSrc?: string;
+  @Input() iconAlt: string = '';
+
 }
