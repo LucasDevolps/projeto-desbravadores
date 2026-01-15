@@ -136,7 +136,6 @@ app-button{
     padding: 0;
 }
 
-/* forçar botão interno a ocupar 100% */
 app-button ::ng-deep .c-button,
 app-button ::ng-deep .c-button--gooey {
   display: block;
