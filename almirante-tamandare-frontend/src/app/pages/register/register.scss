@@ -17,7 +17,7 @@ html, body {
 }
 
 
-.login-container {
+.register-container {
   min-height: 100vh;
   width: 100%;
   background: var(--color-background);
@@ -66,7 +66,6 @@ box-shadow: 0 0 14px rgba(230, 207, 133, 0.35);
     .content-title {
         display: flex;
         align-items: center;
-        gap: 1rem;
         margin-top: 1.5rem;
         flex-direction: column;
         .logo img{
@@ -90,9 +89,8 @@ box-shadow: 0 0 14px rgba(230, 207, 133, 0.35);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
         align-self: center;
-        margin-bottom: 2rem;
     }
 }
 
@@ -110,25 +108,13 @@ app-input{
     max-width: 600px;
 }
 
-.button-login{
+.button-register{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80%;
     align-self: center;
     flex-direction: column;
-    .first-div{
-        margin-top: 2rem;
-        a{
-        color: var(--white-color);
-        }
-    }
-    .second-div{
-        color: var(--white-color);  
-      a{
-        color: var(--white-color);
-        }
-    }
 }
 app-button{
     display: block;
@@ -148,12 +134,6 @@ app-button ::ng-deep .c-button--gooey .c-button__blobs div {
 }
 
 
-.content-title .logo img {
-  width: 120px;
-  height: auto;
-  display: block;
-}
-
 .content-title .title {
   font-size: 2rem;
   line-height: 1;
@@ -171,7 +151,7 @@ app-button ::ng-deep .c-button--gooey .c-button__blobs div {
 
 .content-title .logo {
   position: absolute;
-  top: -9.5rem; 
+  top: -7.5rem; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
