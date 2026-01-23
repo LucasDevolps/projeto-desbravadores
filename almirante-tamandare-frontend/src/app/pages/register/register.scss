@@ -178,3 +178,23 @@ app-button ::ng-deep .c-button--gooey .c-button__blobs div {
     height: auto;
   }
 }
+
+.container-validation {
+  display: none;
+  text-align: center;
+  position: absolute;
+  width: 16vw;
+  height: 15.3vh;
+  border: solid 2px #EAC04E;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--white-color);
+  background-color: #072E85;
+  right: 17rem;
+  bottom: 13.8rem;
+  padding-top: 0.2rem;
+}
+
+app-input:focus-within + .container-validation {
+  display: block;
+}
