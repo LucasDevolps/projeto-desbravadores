@@ -2,17 +2,23 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build backend.dotnet --file backend.dotnet/projeto.desbravadores.Api/Dockerfile --tag projeto-desbravadores:${{ github.sha }}
+      - uses: actions/checkout@v4
+
+      - name: Debug tree
+        run: |
+          ls -la
+          ls -la backend.dotnet || true
+          ls -la backend.dotnet/projeto.desbravadores.Api || true
+          ls -la backend.dotnet/projeto.desbravadores.Api/Dockerfile || true
+
+      - name: Build Docker image
+        run: docker build backend.dotnet --file backend.dotnet/projeto.desbravadores.Api/Dockerfile --tag projeto-desbravadores:${{ github.sha }}
