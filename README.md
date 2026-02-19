@@ -16,10 +16,6 @@ Backend da aplicação **Projeto Desbravadores**, desenvolvido com:
 
 ## 🏗 Arquitetura
 
-O projeto segue os princípios de **Clean Architecture**, dividido em camadas:
-
-## 🏗 Arquitetura
-
 O backend segue os princípios de **Clean Architecture**, dividido em camadas:
 
 ```text
