@@ -18,13 +18,18 @@ Backend da aplicação **Projeto Desbravadores**, desenvolvido com:
 
 O projeto segue os princípios de **Clean Architecture**, dividido em camadas:
 
+## 🏗 Arquitetura
+
+O backend segue os princípios de **Clean Architecture**, dividido em camadas:
+
+```text
 backend.dotnet/
-│
-├── projeto.desbravadores.Api → Camada de apresentação (Controllers)
-├── projeto.desbravadores.Application → Regras de aplicação / Use Cases
-├── projeto.desbravadores.Domain → Entidades e regras de negócio
-├── projeto.desbravadores.Infrastructure → Implementações (JWT, Repositórios, etc.)
-└── projeto.desbravadores.sln
+  projeto.desbravadores.Api/            -> Camada de apresentação (Controllers, Program.cs, DI)
+  projeto.desbravadores.Application/    -> Casos de uso, DTOs, interfaces de serviços
+  projeto.desbravadores.Domain/         -> Entidades, regras de negócio, Value Objects
+  projeto.desbravadores.Infrastructure/ -> Implementações (JWT, repositórios, integrações)
+  projeto.desbravadores.sln
+```
 
 
 ### 🔹 Domain
