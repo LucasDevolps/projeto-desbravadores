@@ -136,3 +136,12 @@ A pipeline é executada automaticamente quando ocorre:
 - Pull Request direcionado para a branch `main`
 
 ---
+📌 Próximos Passos
+
+ - Persistência com EF Core
+ - Implementação de Refresh Token seguro (rotação)
+ - Controle de acesso baseado em Policies
+ - Multi-tenant por igreja/unidade
+ - Observabilidade (Serilog + Elastic + snapshot das request)
+ - Deploy automático (Azure / AWS)
+ - Testes automátizados ( Eu particularmente ainda não fiz por que não tenho pratica )  
