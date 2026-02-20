@@ -48,9 +48,24 @@ public sealed class TokenService(IOptions<JwtOptions> options)
 
         return new TokenResponse(accessToken, accessExpires, refreshToken, refreshExpires);
     }
-    private string GenerateTokens()
+    private static string GenerateTokens()
+    {
+        byte[] bytes = RandomNumberGenerator.GetBytes(64);
+        return Convert.ToBase64String(bytes);
+    }
+    private static string GenerateRefreshTokenPlain()
     {
         byte[] bytes = RandomNumberGenerator.GetBytes(64);
         return Convert.ToBase64String(bytes);
     }
 }
+// Helper criado para gerar o hash do token de refresh, caso queira armazenar o hash no banco de dados para validação futura
+public sealed class TokenHashing
+{
+    public static string Sha256(string input)
+    {
+        byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(input));
+        return Convert.ToHexString(bytes);
+    }
+}
+
