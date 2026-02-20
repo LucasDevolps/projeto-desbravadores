@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using projeto.desbravadores.Application.Auth;
 using projeto.desbravadores.Application.Users;
 using projeto.desbravadores.Infrastructure.Auth;
+using projeto.desbravadores.Infrastructure.Persistence;
 using projeto.desbravadores.Infrastructure.Users;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DesbravadoresDbContext>(
+        opt => { opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); }
+    );
+
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -41,13 +49,25 @@ builder.Services.AddAuthorization();
 // DI do auth
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
-//Apagar essa gambiarra ao final do teste.
-//Criado apenas para evitar o erro de injeção de dependência,
-//já que a autenticação depende de um repositório de usuários, e ainda não temos um banco de dados real.
-builder.Services.AddScoped<IUserRepository, InMemoryUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<DesbravadoresDbContext>(); // Substitua pelo nome do seu Context
+        context.Database.Migrate();
+        Console.WriteLine("--> Migrations aplicadas com sucesso!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"--> Erro ao aplicar migrations: {ex.Message}");
+    }
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
