@@ -102,14 +102,14 @@ Não é necessário rodar comandos `dotnet ef`.
 
 ## 🔄 CI - GitHub Actions
 
-O projeto possui pipeline de CI configurado para:
- - Restore
- - Build
- - Test
- - Build da imagem Docker
- 
-A pipeline é executada automaticamente quando ocorre:
- - Push para a branch main
- - Pull Request direcionado para main
- 
+### ✅ Etapas da pipeline
+- **Restore** (`dotnet restore`)
+- **Build** (`dotnet build`)
+- **Test** (`dotnet test`)
+- **Docker Build** (build da imagem)
+
+### 🚀 Gatilhos
+- **Push** na branch `main`
+- **Pull Request** para a branch `main`
+
 ---
