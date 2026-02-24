@@ -83,8 +83,10 @@ As configurações do JWT ficam no `appsettings.json`:
 Dentro da pasta backend.dotnet:
 
 ```bash
-dotnet restore
-dotnet build
+dotnet tool install --global dotnet-ef
+dotnet restore projeto-desbravadores.slnx
+dotnet clean projeto-desbravadores.slnx
+dotnet build projeto-desbravadores.slnx
 dotnet run --project projeto.desbravadores.Api
 ```
 
@@ -99,6 +101,16 @@ Swagger:
 ```bash
 /swagger
 ```
+---
+
+# Caso seja a primeira vez, rodar o comando abaixo
+
+```bash
+dotnet ef database update \
+  --project backend.dotnet/projeto.desbravadores.Infrastructure \
+  --startup-project backend.dotnet/projeto.desbravadores.Api
+```
+
 ---
 
 🐳 Rodando com Docker

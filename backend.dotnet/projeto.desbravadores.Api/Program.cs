@@ -54,20 +54,9 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<DesbravadoresDbContext>(); // Substitua pelo nome do seu Context
-        context.Database.Migrate();
-        Console.WriteLine("--> Migrations aplicadas com sucesso!");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"--> Erro ao aplicar migrations: {ex.Message}");
-    }
-}
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<DesbravadoresDbContext>();
+db.Database.Migrate();
 
 app.UseSwagger();
 app.UseSwaggerUI();
