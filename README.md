@@ -81,7 +81,7 @@ http://localhost:8080
 
 ### Swagger:
 ```bash
-	http://localhost:8080/swagger
+http://localhost:8080/swagger
 ```
 
 ---
@@ -96,7 +96,7 @@ As migrations são aplicadas automaticamente no startup da aplicação via:
 db.Database.Migrate();
 ```
 
-Não é necessário rodar comandos dotnet ef.
+Não é necessário rodar comandos `dotnet ef`.
 
 ---
 
@@ -107,6 +107,7 @@ O projeto possui pipeline de CI configurado para:
  - Build
  - Test
  - Build da imagem Docker
+ 
 A pipeline é executada automaticamente quando ocorre:
  - Push para a branch main
  - Pull Request direcionado para main
