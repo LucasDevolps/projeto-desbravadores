@@ -1,0 +1,56 @@
+name: Deploy to EC2 (Docker Compose)
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  packages: write   
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/desbravadores-api:latest
+  DEPLOY_PATH: /home/ec2-user/backend.dotnet   
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push image
+        run: |
+          docker build -t "${{ env.IMAGE_NAME }}" -f ./projeto.desbravadores.Api/Dockerfile .
+          docker push "${{ env.IMAGE_NAME }}"
+
+      - name: Deploy on EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+
+            cd "${{ env.DEPLOY_PATH }}"
+
+            # (Opcional) garantir .env atualizado com secrets do GitHub
+            cat > .env << 'EOF'
+            RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}
+            JWT_SIGNING_KEY=${{ secrets.JWT_SIGNING_KEY }}
+            EOF
+
+            # Login no GHCR para puxar imagem privada (se for private)
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+            docker compose -f docker-compose.yml pull
+            docker compose -f docker-compose.yml up -d
+
+            docker image prune -f
+            docker ps --filter "name=desbravadores-api"
