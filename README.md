@@ -24,133 +24,91 @@ backend.dotnet/
   projeto.desbravadores.sln
 ```
 
-
-### 🔹 Domain
-- Entidades
-- Regras de negócio
-- Contratos (interfaces)
-
-### 🔹 Application
-- DTOs
-- Use Cases
-- Serviços de aplicação
-
-### 🔹 Infrastructure
-- Implementações de repositórios
-- Geração de JWT
-- Integrações externas
-
-### 🔹 API
-- Controllers
-- Configuração de DI
-- Middleware
-- Autenticação/Autorização
-
 ---
 
 ## 🔐 Autenticação
 
-A autenticação é feita via **JWT (JSON Web Token)**.
+A autenticação é feita via JWT (JSON Web Token).
 
 Fluxo:
 
-1. Usuário faz login via `/api/auth/login`
-2. Backend valida credenciais
-3. Retorna:
-   - Access Token
-   - Refresh Token
-4. O Access Token deve ser enviado no header
+ - Usuário faz login via /api/auth/login
 
----
+ - Backend valida credenciais
 
-## ⚙️ Configuração
+ - Retorna:
+	- Access Token
+	- Refresh Token
 
-As configurações do JWT ficam no `appsettings.json`:
-
-```json
-"Jwt": {
-  "Issuer": "projeto.desbravadores",
-  "Audience": "projeto.desbravadores",
-  "SigningKey": "CHAVE_SECRETA_AQUI",
-  "AccessTokenMinutes": 30,
-  "RefreshTokenDays": 7
-}
+ - O Access Token deve ser enviado no header:
+ 
+```bash
+Authorization: Bearer {token}
 ```
 ---
 
-▶️ Rodando Localmente
+## 🐳 Executando com Docker
+### 📦 Pré-requisitos
 
-Dentro da pasta backend.dotnet:
+- Docker instalado
+- Docker Compose instalado
 
-```bash
-dotnet tool install --global dotnet-ef
-dotnet restore projeto-desbravadores.slnx
-dotnet clean projeto-desbravadores.slnx
-dotnet build projeto-desbravadores.slnx
-dotnet run --project projeto.desbravadores.Api
-```
+--- 
 
-A API estará disponível em:
+## > Subir aplicação completa (API + SQL Server)
+### Na raiz do projeto, execute:
 
 ```bash
-https://localhost:xxxx
+docker compose up --build
 ```
+--- 
 
-Swagger:
+Esse comando irá:
 
-```bash
-/swagger
-```
----
+ - Construir a imagem da API
+ - Subir o container do SQL Server
+ - Aplicar automaticamente as migrations (caso configurado no startup)
+ - Expor a API na porta 8080
+ 
+--- 
 
-# Caso seja a primeira vez, rodar o comando abaixo
-
-```bash
-dotnet ef database update \
-  --project backend.dotnet/projeto.desbravadores.Infrastructure \
-  --startup-project backend.dotnet/projeto.desbravadores.Api
-```
-
----
-
-🐳 Rodando com Docker
-
-Build da imagem:
-
-```bash
-docker build backend.dotnet \
-  --file backend.dotnet/projeto.desbravadores.Api/Dockerfile \
-  -t projeto-desbravadores:local
-```
-
-Rodar container:
+## 🌐 Acessos
+### API:
 
 ```bash
 http://localhost:8080
 ```
---- 
+
+### Swagger:
+```bash
+	http://localhost:8080/swagger
+```
+
+---
+## 🗄 Banco de Dados
+
+O projeto utiliza SQL Server 2022 rodando em container Docker.
+
+As migrations são aplicadas automaticamente no startup da aplicação via:
+
+
+```C#
+db.Database.Migrate();
+```
+
+Não é necessário rodar comandos dotnet ef.
+
+---
 
 ## 🔄 CI - GitHub Actions
 
 O projeto possui pipeline de CI configurado para:
-
-- Restore
-- Build
-- Test
-- Build da imagem Docker
-
+ - Restore
+ - Build
+ - Test
+ - Build da imagem Docker
 A pipeline é executada automaticamente quando ocorre:
-
-- Push para a branch `main`
-- Pull Request direcionado para a branch `main`
-
+ - Push para a branch main
+ - Pull Request direcionado para main
+ 
 ---
-📌 Próximos Passos
-
- - Persistência com EF Core
- - Implementação de Refresh Token seguro (rotação)
- - Controle de acesso baseado em Policies
- - Multi-tenant por clube
- - Observabilidade (Serilog + Elastic + snapshot das request)
- - Deploy automático (Azure / AWS)
- - Testes automátizados ( Eu particularmente ainda não fiz por que não tenho pratica )  

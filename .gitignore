@@ -56,4 +56,4 @@ nunit-*.xml
 
 #Apagando as migrations do repositório.
 projeto.desbravadores.Infrastructure/Migrations/
-.env
+*.env
