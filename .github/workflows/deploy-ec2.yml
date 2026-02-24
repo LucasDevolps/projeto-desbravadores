@@ -31,7 +31,7 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build -t "${IMAGE_NAME}" -f ./projeto.desbravadores.Api/Dockerfile .
+          docker build -t "${IMAGE_NAME}" -f ./backend.dotnet/projeto.desbravadores.Api/Dockerfile ./backend.dotnet
           docker push "${IMAGE_NAME}"
 
       - name: Deploy on EC2 via SSH
