@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using projeto.desbravadores.Application.Auth;
@@ -55,16 +56,39 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
+var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("Migration");
 var db = scope.ServiceProvider.GetRequiredService<DesbravadoresDbContext>();
-db.Database.Migrate();
+
+const int maxTries = 10;
+
+for (var attempt = 1; attempt <= maxTries; attempt++)
+{
+    try
+    {
+        logger.LogInformation("Applying EF Core migrations (attempt {Attempt}/{Max})...", attempt, maxTries);
+        db.Database.Migrate();
+        logger.LogInformation("Migrations applied successfully.");
+        break;
+    }
+    catch (SqlException ex)
+    {
+        logger.LogWarning(ex, "SQL not ready yet. Retrying in 3s...");
+        Thread.Sleep(TimeSpan.FromSeconds(3));
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Failed applying migrations.");
+        throw;
+    }
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
