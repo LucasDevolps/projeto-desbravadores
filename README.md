@@ -1,6 +1,4 @@
-# 🚀 Projeto Desbravadores - Fontend
-> Preencher depois
---- 
+# 🚀 Projeto Desbravadores - Backend
 # 🚀 Projeto Desbravadores - Backend
 
 Backend da aplicação **Projeto Desbravadores**, desenvolvido com:
